@@ -61,17 +61,7 @@ jobs:
           name: Run linting
           command: npm run lint
   
-  prettier-write:
-    executor: app-executor
-    steps:
-      - checkout
-      - *show-current-branch-name
-      - *restore-cache
-      - run:
-          name: Run prettier write
-          command: npm run prettier:write
-
-  prettier-check:
+  prettier:
     executor: app-executor
     steps:
       - checkout
@@ -135,18 +125,9 @@ workflows:
                 - develop
                 - staging
                 - master
-      - prettier-write:
+      - prettier:
           requires:
             - build
-          filters:
-            branches:
-              only:
-                - develop
-                - staging
-                - master
-      - prettier-check:
-          requires:
-            - prettier-write
           filters:
             branches:
               only:
@@ -156,7 +137,7 @@ workflows:
       - deploy-to-aws-s3:
           requires:
             - linting
-            - prettier-check
+            - prettier
           filters:
             branches:
               only:
