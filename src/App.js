@@ -15,7 +15,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          Auto einai to site mou sou aresei? xixixixxixixi
         </a>
       </header>
     </div>
