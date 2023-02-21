@@ -71,7 +71,7 @@ jobs:
           name: Run prettier write
           command: npm run prettier:write
 
-  prettier:
+  prettier-check:
     executor: app-executor
     steps:
       - checkout
@@ -144,7 +144,7 @@ workflows:
                 - develop
                 - staging
                 - master
-      - prettier:
+      - prettier-check:
           requires:
             - prettier-write
           filters:
@@ -156,7 +156,7 @@ workflows:
       - deploy-to-aws-s3:
           requires:
             - linting
-            - prettier
+            - prettier-check
           filters:
             branches:
               only:
