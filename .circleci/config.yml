@@ -76,7 +76,6 @@ jobs:
       - checkout
       - *show-current-branch-name
       - *install-aws-cli
-      - *build-project
       - run:
           name: Deploy to aws cloudfront
           command: |

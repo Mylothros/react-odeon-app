@@ -15,7 +15,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Auto einai to site mou sou aresei? xixixixxixixi
+          Auto einai to neo site mou sou aresei? xixixixxixixi
         </a>
       </header>
     </div>
