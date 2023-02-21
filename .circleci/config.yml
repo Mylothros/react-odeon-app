@@ -31,7 +31,7 @@ aliases:
       working_directory: /
       command: |
         sudo apt-get -y -qq update
-        sudo apt-get install -y awscli checksum "package.json" }}
+        sudo apt-get install -y awscli
   - &build-project
     run:
       name: Build Project
