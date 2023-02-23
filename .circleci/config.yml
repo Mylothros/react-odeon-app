@@ -220,7 +220,7 @@ workflows:
                 - master
       - notify-via-slack:
           requires:
-            - build
+            - deploy-to-aws-cloudfront
           filters:
             branches:
               only:
