@@ -131,7 +131,7 @@ jobs:
               {
                 "type": "header",
                 "text": {
-                  "type": "plain_text"
+                  "type": "plain_text",
                   "text": "${CIRCLE_BRANCH} branch deployment to aws s3 and cloudfront is complete. ❤️",
                   "emoji": true
                 }
@@ -157,7 +157,7 @@ jobs:
                   },
                   {
                     "type": "mrkdwn",
-                    "text": "*Authos*:\n$CIRCLE_PROJECT_USERNAME"
+                    "text": "*Author*:\n$CIRCLE_PROJECT_USERNAME"
                   }
                 ]
               },
