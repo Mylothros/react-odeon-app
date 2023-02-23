@@ -137,7 +137,7 @@ jobs:
                 }
               },
               {
-                "type": "header",
+                "type": "section",
                 "fields": [
                   {
                     "type": "mrkdwn",
