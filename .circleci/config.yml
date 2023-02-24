@@ -124,9 +124,9 @@ jobs:
             terraform output odeon_app_bucket_name > ../odeon_bucket_name.txt
             terraform output couldfront_distribution_id > ../couldfront_distribution_id.txt
       - persist_to_workspace:
-        root: ./
-        paths:
-        - artifacts
+          root: ./
+          paths:
+          - artifacts
 
   deploy-to-aws-s3:
     executor: app-executor
