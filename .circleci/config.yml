@@ -94,12 +94,12 @@ jobs:
       - checkout
       - *show-current-branch-name
       - run:
-        name: Terraform Validate and Format
-        command: |
-          cd infrastructure/
-          terraform init -backend=false
-          terraform validate
-          terraform fmt -check
+          name: Terraform Validate and Format
+          command: |
+            cd infrastructure/
+            terraform init -backend=false
+            terraform validate
+            terraform fmt -check
 
   terraform-plan-and-apply:
     executor: terraform-executor
@@ -109,20 +109,20 @@ jobs:
         at: ./
       - *show-current-branch-name
       - run:
-        name: Terraform Plan
-        command: |
-          cd artifacts/infrastructure/
-          terraform init
-          terraform workspace select ${CIRCLE_BRANCH} || terraform workspace new ${CIRCLE_BRANCH}
-          terraform plan
+          name: Terraform Plan
+          command: |
+            cd artifacts/infrastructure/
+            terraform init
+            terraform workspace select ${CIRCLE_BRANCH} || terraform workspace new ${CIRCLE_BRANCH}
+            terraform plan
       - run:
-        name: Terraform Apply
-        command: |
-          cd artifacts/infrastructure/
-          terraform workspace select ${CIRCLE_BRANCH}
-          terraform apply --auto-approve
-          terraform output odeon_app_bucket_name > ../odeon_bucket_name.txt
-          terraform output couldfront_distribution_id > ../couldfront_distribution_id.txt
+          name: Terraform Apply
+          command: |
+            cd artifacts/infrastructure/
+            terraform workspace select ${CIRCLE_BRANCH}
+            terraform apply --auto-approve
+            terraform output odeon_app_bucket_name > ../odeon_bucket_name.txt
+            terraform output couldfront_distribution_id > ../couldfront_distribution_id.txt
       - persist_to_workspace:
         root: ./
         paths:
