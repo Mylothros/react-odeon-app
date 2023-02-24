@@ -24,3 +24,15 @@ yarn-error.log*
 
 # personal
 /pre_push.txt
+
+?
+# Terraform
+infrastructure/.terraform
+infrastructure/.terraform.lock.hcl
+infrastructure/*.tfstate
+infrastructure/*.tfstate.*
+crash.log
+infrastructure/override.tf
+infrastructure/override.tf.json
+infrastructure/*_override.tf
+infrastructure/*_override.tf.json
