@@ -106,7 +106,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-        at: ./
+          at: ./
       - *show-current-branch-name
       - run:
           name: Terraform Plan
