@@ -85,8 +85,8 @@ jobs:
       - *show-current-branch-name
       - *restore-cache
       - run:
-          name: Run prettier check
-          command: npm run prettier:check
+          name: Run prettier write
+          command: npm run prettier:write
 
   terraform-validate:
     executor: terraform-executor
