@@ -77,8 +77,7 @@ const Header = () => {
                                     </span>
                                 </li>
                             )
-                        }
-                        
+                        } 
                         <input 
                         className="search-input" 
                         type="text" 
