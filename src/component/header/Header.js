@@ -81,7 +81,7 @@ const Header = () => {
                         <input 
                         className="search-input" 
                         type="text" 
-                        placeHolder="Search for a movie"
+                        placeholder="Search for a movie"
                         />
                     </ul> 
                 </div>
