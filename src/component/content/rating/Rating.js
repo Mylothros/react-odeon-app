@@ -18,7 +18,6 @@ const Rating = ({ rating, totalStars, className }) => {
             percentage = (rating / 10) * 100;
         }
         const startPercentage = `${Math.floor(percentage)}%`;
-        console.log(startPercentage)
         ratingRef.current.style.width = startPercentage;
     }, [rating, totalStars]);
 
