@@ -1,7 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-import logo from '../../assets/odeon-logo.svg'
-import './Header.scss'
+import logo from '../../assets/odeon-logo.svg';
+import './Header.scss';
+import { getMovies } from '../../redux/actions/movies';
 
 const Header_List = [
     {
@@ -29,9 +32,14 @@ const Header_List = [
         type: "upcoming"
     }
 ];
-const Header = () => {
+const Header = (props) => {
+    const { getMovies } = props;
     let [navClass, setNavClass] = useState(false);
     let [menuClass, setMenuClass] = useState(false);
+
+    useEffect(() => {
+        getMovies('now_playing', 1)
+    }, []);
 
     const toggleMenu = () => {
         menuClass = !menuClass;
@@ -90,4 +98,12 @@ const Header = () => {
     )
 }
 
-export default Header;
+Header.propTypes = {
+    getMovies: PropTypes.func
+};
+
+const mapStateToProps = (state) => ({
+    list: state.movies.list
+});
+
+export default connect(mapStateToProps, { getMovies })(Header);
