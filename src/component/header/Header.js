@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import logo from '../../assets/odeon-logo.svg';
 import './Header.scss';
-import { getMovies, setMovieType, setResponsePageNumber, loadMoreMovies } from '../../redux/actions/movies';
+import { getMovies, setMovieType, setResponsePageNumber, loadMoreMovies, searchQuery, searchResult } from '../../redux/actions/movies';
 
 const Header_List = [
     {
@@ -34,10 +34,11 @@ const Header_List = [
 ];
 
 const Header = (props) => {
-    const { getMovies, setMovieType, page, totalPages, loadMoreMovies } = props;
+    const { getMovies, setMovieType, page, totalPages, searchQuery, searchResult } = props;
     let [navClass, setNavClass] = useState(false);
     let [menuClass, setMenuClass] = useState(false);
-    const [type, setType] = useState('now_playing')
+    const [type, setType] = useState('now_playing');
+    const [search, setSearch] = useState('')
     
     useEffect(() => {
         getMovies(type, 1);
@@ -63,6 +64,12 @@ const Header = (props) => {
             document.body.classList.remove('header-nav-open')
         }
 
+    };
+
+    const onSearchChange = (e) => {
+        setSearch(e.target.value);
+        searchQuery(e.target.value);
+        searchResult(e.target.value);
     };
 
     return (
@@ -100,6 +107,8 @@ const Header = (props) => {
                         className="search-input" 
                         type="text" 
                         placeholder="Search for a movie"
+                        value={search}
+                        onChange={onSearchChange}
                         />
                     </ul> 
                 </div>
@@ -113,7 +122,9 @@ Header.propTypes = {
     setMovieType: PropTypes.func,
     list: PropTypes.array,
     page: PropTypes.number,
-    totalPages: PropTypes.number
+    totalPages: PropTypes.number,
+    searchQuery: PropTypes.func,
+    searchResult: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -122,4 +133,4 @@ const mapStateToProps = (state) => ({
     totalPages: state.movies.totalPages
 });
 
-export default connect(mapStateToProps, { getMovies, setMovieType, loadMoreMovies})(Header);
+export default connect(mapStateToProps, { getMovies, setMovieType, searchQuery, searchResult})(Header);
