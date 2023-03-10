@@ -7,34 +7,20 @@ import Slideshow from '../slideshow/Slideshow';
 import Paginate from '../paginate/Paginate';
 import Grid from '../grid/Grid';
 import { IMAGE_URL } from '../../../services/movies.services';
+import { getMovies, setResponsePageNumber } from '../../../redux/actions/movies';
 
 const MainContent = (props) => {
-    const { list } = props;
-    const IMAGES = [
-        {
-            url: "https://img.freepik.com/free-photo/abstract-grunge-decorative-relief-navy-blue-stucco-wall-texture-wide-angle-rough-colored-background_1258-28311.jpg?w=2000",
-            rating: 7.5
-        },
-        {
-            url: "https://png.pngtree.com/thumb_back/fh260/background/20200714/pngtree-modern-double-color-futuristic-neon-background-image_351866.jpg",
-            rating: 8.5
-        },
-        {
-            url: "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg",
-            rating: 9.4
-        },
-        {
-            url: "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg",
-            rating: 6.2
-        },
-        {
-            url: "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg",
-            rating: 10
-        }
-    ];
-    const [currentPage, setCurrentPage] = useState(1);
+    const { list, movieType, totalPages, page, getMovies, setResponsePageNumber } = props;
+    const [currentPage, setCurrentPage] = useState(page);
     const [images, setImages] = useState([]);
     const randomMovies = list.sort(() => Math.random() - Math.random()).slice(0, 4);
+
+    const HEADER_TYPE = {
+        now_playing: 'Now Playing',
+        popular: "Popular",
+        top_rated: 'Top rated',
+        upcoming: "Upcoming"
+    };
 
     useEffect(() => {
         if (randomMovies.length) {
@@ -60,22 +46,30 @@ const MainContent = (props) => {
         }
     }, []);
 
+    useEffect(() => {
+        setCurrentPage(page);
+    }, [page, totalPages]);
+
     const paginate = (type) => {
+        let pageNumber = currentPage;
         if (type === 'prev' && currentPage > 1) {
-            setCurrentPage((prev) => prev - 1)
+            pageNumber -= 1;
         }
         else {
-            setCurrentPage((prev) => prev + 1)
+            pageNumber += 1;
         }
+        setCurrentPage(pageNumber);
+        setResponsePageNumber(pageNumber, totalPages);
+        getMovies(movieType, pageNumber);
     }
 
     return (
         <div className="main-content">
             <Slideshow images={images} auto={true} showArrows={true} />
             <div className="grid-movie-title">
-                <div className="movieType">Now Playing</div>
+                <div className="movieType">{HEADER_TYPE[movieType]}</div>
                 <div className="paginate">
-                    <Paginate paginate={paginate} totalPages={20} currentPage={currentPage}/>
+                    <Paginate paginate={paginate} totalPages={totalPages} currentPage={currentPage}/>
                 </div>
             </div>
             <Grid images={images}/>
@@ -84,11 +78,19 @@ const MainContent = (props) => {
 }
 
 MainContent.propTypes = {
-    list: PropTypes.array.isRequired
+    list: PropTypes.array.isRequired,
+    movieType: PropTypes.string.isRequired,
+    totalPages: PropTypes.number.isRequired,
+    page: PropTypes.number.isRequired,
+    getMovies: PropTypes.func,
+    setResponsePageNumber: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
-    list: state.movies.list
+    list: state.movies.list,
+    movieType: state.movies.movieType,
+    totalPages: state.movies.totalPages,
+    page: state.movies.page
 });
 
-export default connect(mapStateToProps, {})(MainContent);
+export default connect(mapStateToProps, {getMovies, setResponsePageNumber})(MainContent);
