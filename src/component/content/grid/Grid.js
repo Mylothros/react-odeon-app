@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import './Grid.scss';
 import Rating from '../rating/Rating';
 import { IMAGE_URL } from '../../../services/movies.services';
+import LazyImage from '../../lazy-image/LazyImage';
 
 const Grid = (props) => {
  
@@ -22,7 +23,7 @@ const Grid = (props) => {
                 {
                     movieData.map((data) => (
                         <div key={uuidv4()}>
-                        <div className="grid-cell" style={{ backgroundImage: `url(${IMAGE_URL}${data.poster_path})` }}>
+                        <LazyImage className="grid-cell" src={`${IMAGE_URL}${data.poster_path}`} alt="placeholder">
                             <div className="grid-read-more">
                                 <button className="grid-cell-button">
                                     Read More
@@ -39,7 +40,7 @@ const Grid = (props) => {
                                 <div className="grid-vote-average">{data.vote_average}</div>
                                 </div>
                             </div>
-                        </div>
+                        </LazyImage>
                     </div>
                     ))
                 }
