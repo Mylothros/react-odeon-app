@@ -47,6 +47,8 @@ const Header = (props) => {
     const setMovieTypeUrl = (type) => {
         setType(type);
         setMovieType(type);
+        getMovies(type, 1);
+        setResponsePageNumber(page, totalPages);
     };
 
     const toggleMenu = () => {

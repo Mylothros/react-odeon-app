@@ -8,12 +8,11 @@ import Spinner from '../spinner/Spinner';
 import { loadMoreMovies, setResponsePageNumber } from '../../redux/actions/movies';
 
 const Main = (props) => {
-    const { loadMoreMovies, page, totalPages, movieType } = props;
+    
     const [loading, setLoading] = useState(false);
-    const [currentPage, setCurrentPage] = useState(page);
+    
 
-    const mainRef = useRef();
-    const bottomLineRef = useRef();
+    
 
     useEffect (() => {
         setLoading(true);
@@ -22,33 +21,18 @@ const Main = (props) => {
         }, 3000);
     }, []);
 
-    useEffect (() => {
-        setResponsePageNumber(currentPage, totalPages);
-    }, [currentPage, totalPages]);
+    
 
-    const fetchData = () => {
-        let pageNumber = currentPage;
-        if (page < totalPages){
-            pageNumber +=1;
-            setCurrentPage(pageNumber);
-            loadMoreMovies(movieType, pageNumber);
-        }
-    };
+    
 
-    const handleScroll = () => {
-        const containerHeight = mainRef.current.getBoundingClientRect().height;
-        const { top: bottomLineTop } =  bottomLineRef.current.getBoundingClientRect();
-        if (bottomLineTop <= containerHeight) {
-            fetchData();
-        };
-    };
+    
 
     return (
-        <div className="main" ref={mainRef} onScroll={() => handleScroll()}>
+        <div>
             {
                 loading ? <Spinner /> : <MainContent />
             } 
-            <div ref={bottomLineRef}></div>
+            
         </div>
     )
 }
