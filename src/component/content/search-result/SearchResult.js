@@ -1,29 +1,34 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
 import { connect } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import PropTypes from 'prop-types';
 
-import './Grid.scss';
+import '../grid/Grid.scss';
+import './SearchResult.scss';
 import Rating from '../rating/Rating';
 import { IMAGE_URL } from '../../../services/movies.services';
 import LazyImage from '../../lazy-image/LazyImage';
 
-const Grid = (props) => {
+const SearchResult = (props) => {
  
-    const { list } = props;
+    const { searchResult, searchQuery } = props;
     const [movieData, setMovieData] = useState([]);
 
     useEffect(() => {
-        setMovieData(list)
-    }, [list]);
+        setMovieData(searchResult)
+    }, [searchResult]);
 
     return (
-        <>
+        <div className="searchKeyword">
+            <div className="grid-search-title">
+                <span className="grid-text1">Search Keyword:</span> {' '}
+                <span className="grid-text2">{searchQuery}</span>
+            </div>
             <div className="grid">
                 {
                     movieData.map((data) => (
-                        <div key={uuidv4()}>
-                        { 
+                        <Fragment key={uuidv4()}>
+                        {
                             data.poster_path && <LazyImage className="grid-cell" src={`${IMAGE_URL}${data.poster_path}`} alt="placeholder">
                                 <div className="grid-read-more">
                                     <button className="grid-cell-button">
@@ -43,20 +48,22 @@ const Grid = (props) => {
                                 </div>
                             </LazyImage>
                         }
-                    </div>
+                    </Fragment>
                     ))
                 }
             </div>
-        </>
+        </div>
     )
 }
 
-Grid.propTypes = {
-    list: PropTypes.array.isRequired
+SearchResult.propTypes = {
+    searchResult: PropTypes.array.isRequired,
+    searchQuery: PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state) => ({
-    list: state.movies.list
+    searchResult: state.movies.searchResult,
+    searchQuery: state.movies.searchQuery
 });
 
-export default connect(mapStateToProps, {})(Grid);
+export default connect(mapStateToProps, {})(SearchResult);
