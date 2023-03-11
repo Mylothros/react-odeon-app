@@ -13,13 +13,11 @@ const Main = (props) => {
     const [loading, setLoading] = useState(false);
 
     useEffect (() => {
-        if (runSpinnerValue === 1){
             setLoading(true);
             setTimeout(()=> {
                 setLoading(false);
                 // runSpinner(0); we could run this if we did not have route now it is not necessary
-            }, 3000);   
-        }
+            }, 3000);
         clearMovieDetails();
     }, []);
 
