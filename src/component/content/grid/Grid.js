@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import './Grid.scss';
 import Rating from '../rating/Rating';
@@ -17,6 +18,11 @@ const Grid = (props) => {
         setMovieData(list)
     }, [list]);
 
+    const formatMovieTitle = (title) => {
+        const titleStr = title.toLowerCase();
+        return titleStr.replace(/ /g, '-');
+    };
+
     return (
         <>
             <div className="grid">
@@ -27,7 +33,7 @@ const Grid = (props) => {
                             data.poster_path && <LazyImage className="grid-cell" src={`${IMAGE_URL}${data.poster_path}`} alt="placeholder">
                                 <div className="grid-read-more">
                                     <button className="grid-cell-button">
-                                        Read More
+                                        <Link to={`/${data.id}/${formatMovieTitle(data.title)}/details`}>Read More</Link>
                                     </button>
                                 </div>
                                 <div className="grid-detail">

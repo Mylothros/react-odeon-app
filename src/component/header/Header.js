@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 
 import logo from '../../assets/odeon-logo.svg';
 import './Header.scss';
@@ -39,6 +40,8 @@ const Header = (props) => {
     let [menuClass, setMenuClass] = useState(false);
     const [type, setType] = useState('now_playing');
     const [search, setSearch] = useState('')
+
+    const history = useNavigate();
     
     useEffect(() => {
         getMovies(type, 1);
@@ -72,12 +75,16 @@ const Header = (props) => {
         searchResult(e.target.value);
     };
 
+    const navigateToHome = () => {
+        history('/');
+    };
+
     return (
         <>
             <div className="header-nav-wrapper">
                 <div className="header-bar"></div>
                 <div className="header-navbar">
-                    <div className="header-image">
+                    <div className="header-image" onClick={navigateToHome}>
                         <img src={logo} alt="" />
                     </div>
                     <div 

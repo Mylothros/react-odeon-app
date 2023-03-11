@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { BrowserRouter as Router, Routes ,Route } from 'react-router-dom';
 
 import "./App.scss";
-
 import Header from "./component/header/Header"
 import Main from "./component/main/Main"
 import { loadMoreMovies, setResponsePageNumber } from './redux/actions/movies';
+import Details from './component/content/details/Details';
 
 function App(props) {
   const { loadMoreMovies, page, totalPages, movieType } = props;
@@ -37,13 +38,18 @@ function App(props) {
   };
 
   return (
-    <div className="main" ref={mainRef} onScroll={() => handleScroll()}>
-      <Header />
-      <div className="app">
-        <Main />
+    <Router>
+      <div className="main" ref={mainRef} onScroll={() => handleScroll()}>
+        <Header />
+        <div className="app">
+          <Routes>
+            <Route path='/' element={<Main/>}/>
+            <Route exact path="/:id/:name/details" element={<Details/>}/>
+          </Routes>
+        </div>
+        <div ref={bottomLineRef}></div>
       </div>
-      <div ref={bottomLineRef}></div>
-    </div>
+    </Router>
   );
 }
 
