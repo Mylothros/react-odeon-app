@@ -10,7 +10,7 @@ import { loadMoreMovies, setResponsePageNumber } from './redux/actions/movies';
 import Details from './component/content/details/Details';
 
 function App(props) {
-  const { loadMoreMovies, page, totalPages, movieType } = props;
+  const { loadMoreMovies, page, totalPages, movieType, movie } = props;
   const [currentPage, setCurrentPage] = useState(page);
 
   const mainRef = useRef();
@@ -30,11 +30,14 @@ function App(props) {
   }, [currentPage, totalPages]);
 
   const handleScroll = () => {
-    const containerHeight = mainRef.current.getBoundingClientRect().height;
-    const { top: bottomLineTop } =  bottomLineRef.current.getBoundingClientRect();
-    if (bottomLineTop <= containerHeight) {
-        fetchData();
-    };
+    if(movie === [])
+    {
+      const containerHeight = mainRef.current.getBoundingClientRect().height;
+      const { top: bottomLineTop } =  bottomLineRef.current.getBoundingClientRect();
+      if (bottomLineTop <= containerHeight) {
+          fetchData();
+      };
+    }
   };
 
   return (
@@ -57,13 +60,15 @@ Main.propTypes = {
   page: PropTypes.number,
   totalPages: PropTypes.number,
   loadMoreMovies: PropTypes.func,
-  movieType: PropTypes.string
+  movieType: PropTypes.string,
+  movie: PropTypes.array
 };
 
 const mapStateToProps = (state) => ({
   page: state.movies.page,
   totalPages: state.movies.totalPages,
-  movieType: state.movies.movieType
+  movieType: state.movies.movieType,
+  movie: state.movies.movie
 });
 
 export default connect(mapStateToProps, { loadMoreMovies, setResponsePageNumber })(App);

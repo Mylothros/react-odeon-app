@@ -106,7 +106,8 @@
   
   .search-input {
     grid-area: search;
-    margin-top: 10px;
+    margin-top: 7px;
+    margin-right: 7px;
     width: auto;
     border: 1px solid #9aa9bb;
     padding: 5px;
@@ -181,7 +182,12 @@
     .header-nav-open {
       overflow: hidden;
     }
-  
+
+    .header-navbar {
+      display: grid;
+      grid-template: "link . . search menu";
+    }
+
     .header-navbar .header-nav {
       display: flex;
       flex-direction: column;

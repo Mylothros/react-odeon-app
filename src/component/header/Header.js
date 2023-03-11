@@ -36,11 +36,11 @@ const Header_List = [
 
 const Header = (props) => {
     const { getMovies, setMovieType, page, totalPages, searchQuery, searchResult, clearMovieDetails } = props;
-    let [navClass, setNavClass] = useState(false);
     let [menuClass, setMenuClass] = useState(false);
     const [type, setType] = useState('now_playing');
     const [search, setSearch] = useState('');
-    const [disableSearch, setDisableSearch] = useState(false)
+    const [disableSearch, setDisableSearch] = useState(false);
+    const [closeMenuHeader, setCloseMenuHeader] = useState("");
 
     const history = useNavigate();
     const location = useLocation();
@@ -52,10 +52,12 @@ const Header = (props) => {
         if(location.pathname !=='/' && location.key) {
             setDisableSearch(true);
         }
+        clearMovieDetails();
     }, [type, disableSearch, location]);
 
     const setMovieTypeUrl = (type) => {
         setDisableSearch(false);
+        setCloseMenuHeader("");
         if(location.pathname !== '/') {
             clearMovieDetails();
             history('/');
@@ -70,21 +72,18 @@ const Header = (props) => {
         }
     };
 
-    const toggleMenu = () => {
-        menuClass = !menuClass;
-        navClass = !navClass;
-        setNavClass(navClass);
-        setMenuClass(menuClass);
-        if (navClass) {
-            document.body.classList.add('header-nav-open')
+    const toggleMenu = () => {     
+        menuClass = !menuClass;  
+        if (closeMenuHeader === "") {
+            setCloseMenuHeader("header-mobile-nav");
         }
         else {
-            document.body.classList.remove('header-nav-open')
+            setCloseMenuHeader("");
         }
-
     };
 
     const onSearchChange = (e) => {
+        setCloseMenuHeader("");
         setSearch(e.target.value);
         searchQuery(e.target.value);
         searchResult(e.target.value);
@@ -104,6 +103,13 @@ const Header = (props) => {
                     <div className="header-image" onClick={navigateToHome}>
                         <img src={logo} alt="" />
                     </div>
+                    <input 
+                        className={`search-input ${disableSearch ? 'disabled' : ''}`}
+                        type="text" 
+                        placeholder="Search for a movie"
+                        value={search}
+                        onChange={onSearchChange}
+                    />
                     <div 
                         className={`${menuClass ? 'header-menu-toggle is-active' : 'header-menu-toggle'}`} 
                         id="hedaer-mobile-menu"
@@ -113,7 +119,7 @@ const Header = (props) => {
                         <span className="bar"></span>
                         <span className="bar"></span>
                     </div>
-                    <ul className={`${navClass ? 'header-nav header-mobile-nav' : 'header-nav'}`}>
+                    <ul className={`header-nav ${closeMenuHeader} header-nav`}>
                         {
                             Header_List.map((data) => 
                                 <li key={data.id} onClick={() => setMovieTypeUrl(data.type)}
@@ -127,14 +133,8 @@ const Header = (props) => {
                                 </li>
                             )
                         } 
-                        <input 
-                        className={`search-input ${disableSearch ? 'disabled' : ''}`}
-                        type="text" 
-                        placeholder="Search for a movie"
-                        value={search}
-                        onChange={onSearchChange}
-                        />
-                    </ul> 
+                        
+                    </ul>
                 </div>
             </div>
         </>

@@ -59,6 +59,7 @@ export default (state = initialState, action) => {
     case CLEAR_MOVIE_DETAILS:
     return {
       ...state,
+      page: 1,
       movie: action.payload
     };
     default:
