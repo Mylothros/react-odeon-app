@@ -7,7 +7,7 @@ import Slideshow from '../slideshow/Slideshow';
 import Paginate from '../paginate/Paginate';
 import Grid from '../grid/Grid';
 import { IMAGE_URL } from '../../../services/movies.services';
-import { getMovies, setResponsePageNumber } from '../../../redux/actions/movies';
+import { getMovies, setResponsePageNumber, clearMovieDetails } from '../../../redux/actions/movies';
 
 const MainContent = (props) => {
     const { list, movieType, totalPages, page, getMovies, setResponsePageNumber } = props;
@@ -42,7 +42,8 @@ const MainContent = (props) => {
                     url: `${IMAGE_URL}/${randomMovies[3].backdrop_path}`
                 }
             ]
-            setImages(IMAGES)
+            setImages(IMAGES);
+            clearMovieDetails();
         }
     }, []);
 
@@ -93,4 +94,4 @@ const mapStateToProps = (state) => ({
     page: state.movies.page
 });
 
-export default connect(mapStateToProps, {getMovies, setResponsePageNumber})(MainContent);
+export default connect(mapStateToProps, {getMovies, setResponsePageNumber, clearMovieDetails})(MainContent);

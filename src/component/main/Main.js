@@ -6,10 +6,10 @@ import './Main.scss';
 import MainContent from '../content/main-content/MainContent';
 import Spinner from '../spinner/Spinner';
 import SearchResult from '../content/search-result/SearchResult';
-import { runSpinner } from '../../redux/actions/movies';
+import { runSpinner, clearMovieDetails } from '../../redux/actions/movies';
 
 const Main = (props) => {
-    const { searchResult, runSpinnerValue, runSpinner } = props;
+    const { searchResult, runSpinnerValue, runSpinner, clearMovieDetails } = props;
     const [loading, setLoading] = useState(false);
 
     useEffect (() => {
@@ -20,6 +20,7 @@ const Main = (props) => {
                 // runSpinner(0); we could run this if we did not have route now it is not necessary
             }, 3000);   
         }
+        clearMovieDetails();
     }, []);
 
     return (
@@ -44,4 +45,4 @@ const mapStateToProps = (state) => ({
     runSpinnerValue: state.movies.runSpinnerValue
 });
 
-export default connect(mapStateToProps, {runSpinner})(Main);
+export default connect(mapStateToProps, {runSpinner, clearMovieDetails})(Main);

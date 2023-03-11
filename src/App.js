@@ -19,7 +19,7 @@ function App(props) {
   const fetchData = () => {
       let pageNumber = currentPage;
       if (page < totalPages){
-          pageNumber +=1;
+          pageNumber += 1;
           setCurrentPage(pageNumber);
           loadMoreMovies(movieType, pageNumber);
       }
@@ -30,7 +30,7 @@ function App(props) {
   }, [currentPage, totalPages]);
 
   const handleScroll = () => {
-    if(movie === [])
+    if(movie.length === 0)
     {
       const containerHeight = mainRef.current.getBoundingClientRect().height;
       const { top: bottomLineTop } =  bottomLineRef.current.getBoundingClientRect();

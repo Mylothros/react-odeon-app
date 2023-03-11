@@ -52,7 +52,6 @@ const Header = (props) => {
         if(location.pathname !=='/' && location.key) {
             setDisableSearch(true);
         }
-        clearMovieDetails();
     }, [type, disableSearch, location]);
 
     const setMovieTypeUrl = (type) => {
