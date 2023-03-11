@@ -20,7 +20,7 @@ const Paginate = (props) => {
                 {page} - {totalPageNumber}
             </span>
             <button className={page > 1 ? "paginate-button" : "paginate-button disable"} onClick={() => paginate('prev')}>Prev</button>
-            <button className="paginate-button" onClick={() => paginate('next')}>Next</button>
+            <button className={page < totalPages ? "paginate-button" : "paginate-button disable"} onClick={() => paginate('next')}>Next</button>
         </>
     );
 };

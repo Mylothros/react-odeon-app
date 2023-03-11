@@ -5,3 +5,4 @@ export const LOAD_MORE_RESULTS = 'LOAD_MORE_RESULTS';
 export const MOVIE_TYPE = 'MOVIE_TYPE';
 export const SEARCH_QUERY = 'SEARCH_QUERY';
 export const SEARCH_RESULT = 'SEARCH_RESULT';
+export const RUN_SPINNER = 'RUN_SPINNER';

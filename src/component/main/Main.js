@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -6,16 +7,20 @@ import './Main.scss';
 import MainContent from '../content/main-content/MainContent';
 import Spinner from '../spinner/Spinner';
 import SearchResult from '../content/search-result/SearchResult';
+import { runSpinner } from '../../redux/actions/movies';
 
 const Main = (props) => {
-    const { searchResult } = props;
+    const { searchResult, runSpinnerValue, runSpinner } = props;
     const [loading, setLoading] = useState(false);
 
     useEffect (() => {
-        setLoading(true);
-        setTimeout(()=> {
-            setLoading(false);
-        }, 3000);
+        if (runSpinnerValue === 1){
+            setLoading(true);
+            setTimeout(()=> {
+                setLoading(false);
+                // runSpinner(0); we could run this if we did not have route now it is not necessary
+            }, 3000);   
+        }
     }, []);
 
     return (
@@ -31,11 +36,13 @@ const Main = (props) => {
 }
 
 Main.propTypes = {
-    searchResult: PropTypes.array
+    searchResult: PropTypes.array,
+    runSpinnerValue: PropTypes.number
 };
 
 const mapStateToProps = (state) => ({
-    searchResult: state.movies.searchResult
+    searchResult: state.movies.searchResult,
+    runSpinnerValue: state.movies.runSpinnerValue
 });
 
-export default connect(mapStateToProps, {})(Main);
+export default connect(mapStateToProps, {runSpinner})(Main);
