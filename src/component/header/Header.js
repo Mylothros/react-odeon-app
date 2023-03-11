@@ -117,7 +117,7 @@ const Header = (props) => {
                         <span className="bar"></span>
                         <span className="bar"></span>
                         <span className="bar"></span>
-                    
+                    </div>
                     <ul className={`header-nav ${closeMenuHeader} header-nav`}>
                         {
                             Header_List.map((data) => 
@@ -132,8 +132,8 @@ const Header = (props) => {
                                 </li>
                             )
                         } 
+                        
                     </ul>
-                    </div>
                 </div>
             </div>
         </>
