@@ -25,13 +25,14 @@
     color: #9aa9bb;
   }
   
-  .header-image {
+  .header-image > h1 {
+    font-family: Cursive;
+    font-weight: 600;
     cursor: pointer;
-    grid-area: link;
+    color: #3498db;
     width: 170px;
     height: 50px;
-    margin-left: 25px;
-    margin-top: -5px;
+    margin-top: 0px;
   }
   
   .header-nav {

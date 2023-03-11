@@ -100,7 +100,7 @@ const Header = (props) => {
                 <div className="header-bar"></div>
                 <div className="header-navbar">
                     <div className="header-image" onClick={navigateToHome}>
-                        <img src={logo} alt="" />
+                        <h1>Odeon</h1>
                     </div>
                     <input 
                         className={`search-input ${disableSearch ? 'disabled' : ''}`}
