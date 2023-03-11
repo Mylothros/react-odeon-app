@@ -57,7 +57,7 @@
   .header-nav-item {
     cursor: pointer;
   }
-  
+
   .header-nav-item .header-list-name {
     font-size: 0.9rem;
     font-weight: 400;
@@ -182,7 +182,7 @@
     }
   }
   
-  @media only screen and (max-width: 720px) {
+  @media only screen and (max-width: 840px) {
     .header-nav-open {
       overflow: hidden;
     }
@@ -197,9 +197,10 @@
       flex-direction: column;
       position: fixed;
       top: 55px;
+      left: 0px;
       background-color: #fff;
       width: 100%;
-      height: calc(100vh - 55px);
+      height: 230px;
       transform: translate(-101%);
       text-align: justify;
       overflow: hidden;
@@ -217,7 +218,7 @@
     }
   
     .header-navbar li:first-child {
-      margin-top: 50px;
+      margin-top: 20px;
     }
   
     .header-navbar li .header-list-name {
