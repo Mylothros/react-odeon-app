@@ -1,4 +1,4 @@
-import { MOVIE_LIST, RESPONSE_PAGE, LOAD_MORE_RESULTS, MOVIE_TYPE, SEARCH_QUERY, SEARCH_RESULT, RUN_SPINNER } from "../types";
+import { MOVIE_LIST, RESPONSE_PAGE, LOAD_MORE_RESULTS, MOVIE_TYPE, SEARCH_QUERY, SEARCH_RESULT, RUN_SPINNER, MOVIE_DETAILS, CLEAR_MOVIE_DETAILS } from "../types";
 
 const initialState = {
   list: [],
@@ -7,7 +7,8 @@ const initialState = {
   movieType: 'now_playing',
   searchQuery: '',
   searchResult: [],
-  runSpinnerValue: 1
+  runSpinnerValue: 1,
+  movie: []
 };
 
 export default (state = initialState, action) => {
@@ -49,6 +50,16 @@ export default (state = initialState, action) => {
     return {
       ...state,
       runSpinnerValue: action.payload
+    };
+    case MOVIE_DETAILS:
+    return {
+      ...state,
+      movie: action.payload
+    };
+    case CLEAR_MOVIE_DETAILS:
+    return {
+      ...state,
+      movie: action.payload
     };
     default:
       return state;

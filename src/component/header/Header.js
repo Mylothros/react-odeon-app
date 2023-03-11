@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import logo from '../../assets/odeon-logo.svg';
 import './Header.scss';
-import { getMovies, setMovieType, setResponsePageNumber, loadMoreMovies, searchQuery, searchResult } from '../../redux/actions/movies';
+import { getMovies, setMovieType, setResponsePageNumber, searchQuery, searchResult, clearMovieDetails } from '../../redux/actions/movies';
 
 const Header_List = [
     {
@@ -35,24 +35,39 @@ const Header_List = [
 ];
 
 const Header = (props) => {
-    const { getMovies, setMovieType, page, totalPages, searchQuery, searchResult } = props;
+    const { getMovies, setMovieType, page, totalPages, searchQuery, searchResult, clearMovieDetails } = props;
     let [navClass, setNavClass] = useState(false);
     let [menuClass, setMenuClass] = useState(false);
     const [type, setType] = useState('now_playing');
-    const [search, setSearch] = useState('')
+    const [search, setSearch] = useState('');
+    const [disableSearch, setDisableSearch] = useState(false)
 
     const history = useNavigate();
+    const location = useLocation();
     
     useEffect(() => {
         getMovies(type, 1);
         setResponsePageNumber(page, totalPages);
-    }, [type]);
+
+        if(location.pathname !=='/' && location.key) {
+            setDisableSearch(true);
+        }
+    }, [type, disableSearch, location]);
 
     const setMovieTypeUrl = (type) => {
-        setType(type);
-        setMovieType(type);
-        getMovies(type, 1);
-        setResponsePageNumber(page, totalPages);
+        setDisableSearch(false);
+        if(location.pathname !== '/') {
+            clearMovieDetails();
+            history('/');
+            setType(type);
+            setMovieType(type);
+        }
+        else {
+            setType(type);
+            setMovieType(type);
+            getMovies(type, 1);
+            setResponsePageNumber(page, totalPages);
+        }
     };
 
     const toggleMenu = () => {
@@ -76,6 +91,8 @@ const Header = (props) => {
     };
 
     const navigateToHome = () => {
+        setDisableSearch(false);
+        clearMovieDetails();
         history('/');
     };
 
@@ -111,7 +128,7 @@ const Header = (props) => {
                             )
                         } 
                         <input 
-                        className="search-input" 
+                        className={`search-input ${disableSearch ? 'disabled' : ''}`}
                         type="text" 
                         placeholder="Search for a movie"
                         value={search}
@@ -131,7 +148,8 @@ Header.propTypes = {
     page: PropTypes.number,
     totalPages: PropTypes.number,
     searchQuery: PropTypes.func,
-    searchResult: PropTypes.func
+    searchResult: PropTypes.func,
+    clearMovieDetails: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -140,4 +158,4 @@ const mapStateToProps = (state) => ({
     totalPages: state.movies.totalPages
 });
 
-export default connect(mapStateToProps, { getMovies, setMovieType, searchQuery, searchResult})(Header);
+export default connect(mapStateToProps, { getMovies, setMovieType, searchQuery, searchResult, clearMovieDetails })(Header);
