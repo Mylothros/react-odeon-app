@@ -8,6 +8,7 @@ import Header from "./component/header/Header"
 import Main from "./component/main/Main"
 import { loadMoreMovies, setResponsePageNumber } from './redux/actions/movies';
 import Details from './component/content/details/Details';
+import ErrorPage from './component/error/ErrorPage';
 
 function App(props) {
   const { loadMoreMovies, page, totalPages, movieType, movie } = props;
@@ -48,6 +49,7 @@ function App(props) {
           <Routes>
             <Route path='/' element={<Main/>}/>
             <Route exact path="/:id/:name/details" element={<Details/>}/>
+            <Route path="*" element={<ErrorPage />}/>
           </Routes>
         </div>
         <div ref={bottomLineRef}></div>
