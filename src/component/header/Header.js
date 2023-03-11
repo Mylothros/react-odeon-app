@@ -60,6 +60,9 @@ const Header = (props) => {
     }, [type, disableSearch, location]);
 
     const setMovieTypeUrl = (type) => {
+        searchResult([]);
+        searchQuery('');
+        setSearch('');
         setDisableSearch(false);
         setCloseMenuHeader("");
         if(location.pathname !== '/') {
@@ -94,6 +97,9 @@ const Header = (props) => {
     };
 
     const navigateToHome = () => {
+        searchResult([]);
+        searchQuery('');
+        setSearch('');
         setDisableSearch(false);
         clearMovieDetails();
         history('/');

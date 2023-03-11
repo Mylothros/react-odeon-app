@@ -12,7 +12,7 @@ const Reviews = (props) => {
     <>
       <div className="movie-reviews">
         <div className="div-title">
-          Reviews { reviews.results.length > 0 ? reviews.results.length : "" }
+          Reviews ({ reviews.results.length > 0 ? reviews.results.length : "" })
         </div>
         {
           reviews.results.length ?
