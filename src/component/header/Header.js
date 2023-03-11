@@ -105,13 +105,13 @@ const Header = (props) => {
                     <input 
                         className={`search-input ${disableSearch ? 'disabled' : ''}`}
                         type="text" 
-                        placeholder="Search for a movie"
+                        placeholder="Search"
                         value={search}
                         onChange={onSearchChange}
                     />
                     <div 
                         className={`${menuClass ? 'header-menu-toggle is-active' : 'header-menu-toggle'}`} 
-                        id="hedaer-mobile-menu"
+                        id="header-mobile-menu"
                         onClick={() => toggleMenu()}
                     >
                         <span className="bar"></span>
