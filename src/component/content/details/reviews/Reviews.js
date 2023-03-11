@@ -24,7 +24,7 @@ const Reviews = (props) => {
               </div>
             )
           }) :
-          <p>No reviews are posted yet.)</p>
+          <p>No reviews are posted yet.</p>
           }
       </div>
     </>
