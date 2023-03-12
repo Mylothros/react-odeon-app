@@ -1,4 +1,4 @@
-FROM node:13-alpine
+FROM node:18.14.1
 
 WORKDIR /app
 
@@ -10,9 +10,7 @@ copy . /app
 
 RUN npm install
 
-RUN npm ci
-
-RUN npm build
+RUN npm run build
 
 EXPOSE 3000
 
