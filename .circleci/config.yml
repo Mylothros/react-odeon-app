@@ -13,6 +13,11 @@ executors:
   terraform-executor:
     docker:
       - image: hashicorp/terraform:1.3.9
+  docker-image:
+    environment:
+      IMAGE_NAME: mylothros/odeonapp
+    docker:
+      - image: circleci/buildpack-deps:strech
 
 aliases:
   - &show-current-branch-name
@@ -97,7 +102,29 @@ jobs:
       - run:
           name: Run unit test
           command: npm run test
-      
+
+  publich-docker-image-docker-hub:
+    executor: docker-image
+    steps:
+      - checkout
+      - setup_remote_docker
+      - *restore-cache
+      - run: docker login -u "${DOCKER_HUB_USER}" -p ${DOCKER_HUB_PASSWORD}"
+      - run: docker build --build-arg REACT_APP_API_SECRET=${REACT_APP_API_SECRET}-t ${IMAGE_NAME}:latest .
+      - run:
+          name: Tag and push to docker hub
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]
+            then
+              docker tag ${IMAGE_NAME}:latest ${IMAGE_NAME}:production-${CIRCLE_BUILD_NUM} && docker push ${IMAGE_NAME}:production-${CIRCLE_BUILD_NUM}
+            elif [ "${CIRCLE_BRANCH}" == "staging" ]
+            then
+              docker tag ${IMAGE_NAME}:latest ${IMAGE_NAME}:staging-${CIRCLE_BUILD_NUM} && docker push ${IMAGE_NAME}:staging-${CIRCLE_BUILD_NUM}
+            else
+              docker tag ${IMAGE_NAME}:latest ${IMAGE_NAME}:develop-${CIRCLE_BUILD_NUM} && docker push ${IMAGE_NAME}:develop-${CIRCLE_BUILD_NUM}
+            fi
+
+
   terraform-validate:
     executor: terraform-executor
     steps:
@@ -286,6 +313,15 @@ workflows:
           requires:
             - linting
             - prettier
+          filters:
+            branches:
+              only:
+                - develop
+                - staging
+                - master
+      - publich-docker-image-docker-hub:
+          requires:
+            - unit-test
           filters:
             branches:
               only:
