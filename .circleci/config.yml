@@ -296,6 +296,7 @@ workflows:
           requires:
             - linting
             - prettier
+            - unit-test
           filters:
             branches:
               only:
