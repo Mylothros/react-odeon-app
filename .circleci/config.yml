@@ -17,7 +17,7 @@ executors:
     environment:
       IMAGE_NAME: mylothros/odeonapp
     docker:
-      - image: circleci/buildpack-deps:strech
+      - image: circleci/buildpack-deps
 
 aliases:
   - &show-current-branch-name
