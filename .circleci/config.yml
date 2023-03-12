@@ -109,7 +109,7 @@ jobs:
       - checkout
       - setup_remote_docker
       - *restore-cache
-      - run: docker login -u "${DOCKER_HUB_USER}" -p ${DOCKER_HUB_PASSWORD}"
+      - run: docker login -u "${DOCKER_HUB_USER}" -p "${DOCKER_HUB_PASSWORD}"
       - run: docker build --build-arg REACT_APP_API_SECRET=${REACT_APP_API_SECRET}-t ${IMAGE_NAME}:latest .
       - run:
           name: Tag and push to docker hub
@@ -330,7 +330,7 @@ workflows:
                 - master
       - terraform-validate:
           requires:
-            - unit-test
+            - publich-docker-image-docker-hub
           filters:
             branches:
               only:
